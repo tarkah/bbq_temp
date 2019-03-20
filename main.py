@@ -22,10 +22,8 @@ def index():
 @app.route('/api/temp', methods=['GET', 'POST'])
 def api_temp():
     if request.method == 'POST':
-        print(request.mimetype)
         if request.is_json:
             json = request.get_json(silent=True)
-            print(json)
             if json is None:
                 response = { 'status': 'failure', 'error_message': 'Json empty or not valid' }
                 return jsonify(response)
