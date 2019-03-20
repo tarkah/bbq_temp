@@ -1,0 +1,26 @@
+<title>BBQ Temps</title>
+<head>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/table.css') }}">
+</head>
+<body>
+    Simple Site for BBQ Temp
+      <br><br>
+      <table>
+        <TR>
+          <TH>Id</TH>
+          <TH>Temp1</TH>
+          <TH>Temp2</TH>
+          <TH>Volts</TH>
+          <TH>Time (Pacific)</TH>
+        {% for temp in temps|sort(attribute='id', reverse=True) %}
+        <TR>
+          <TD>{{temp.id}}</TD>
+          <TD>{{temp.temp1}}</TD>
+          <TD>{{temp.temp2}}</TD>
+          <TD>{{temp.volts}}</TD>
+          <TD>{{temp.date.strftime('%H:%M:%S %Y-%m-%d')}}</TD>
+        </TR>
+        {% endfor %}
+      </table>
+    </body>
+
