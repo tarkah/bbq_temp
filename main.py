@@ -13,7 +13,7 @@ queue = Queue()
 app = Flask(__name__)
 
 placeholder_temp = {'id': -1, 'temp1': 0, 'temp2': 0, 'volts': 0, 'date': datetime.now(LOCAL_TZ)}
-temps = [].append(placeholder_temp)
+temps = [ placeholder_temp ]
 
 @app.route('/')
 def index():
