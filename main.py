@@ -12,7 +12,8 @@ queue = Queue()
 
 app = Flask(__name__)
 
-temps = [{'id': 'temp', 'temp1': 0, 'temp2': 0, 'volts': 0, 'date': datetime.now(LOCAL_TZ)}]
+placeholder_temp = {'id': -1, 'temp1': 0, 'temp2': 0, 'volts': 0, 'date': datetime.now(LOCAL_TZ)}
+temps = [].append(placeholder_temp)
 
 @app.route('/')
 def index():
@@ -29,7 +30,7 @@ def api_temp():
                 response = { 'status': 'failure', 'error_message': 'Json empty or not valid' }
                 return jsonify(response)
             queue.put(time.time())
-            if temps[0]['id']=='temp':
+            if temps[0]['id'] == -1:
                 temps.pop(0)
             temps.append({'id': len(temps), 'temp1': json['Temp1'],
                           'temp2': json['Temp2'], 'volts': json['Volts'],
@@ -63,7 +64,7 @@ def temp_timeout(queue):
         print('Seconds since last temp update: {}'.format(delta))
         if delta > TEMP_TIMEOUT:
             temps.clear()
-            temps.append({'id': 'temp', 'temp1': 0, 'temp2': 0, 'volts': 0, 'date': datetime.now(LOCAL_TZ)})
+            temps.append(placeholder_temp)
 
 if __name__ == '__main__':
     Thread(target=temp_timeout, args=(queue,)).start()
