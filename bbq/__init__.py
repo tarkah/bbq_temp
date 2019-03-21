@@ -3,9 +3,6 @@ from flask import Flask
 app = Flask(__name__)
 
 
-from datetime import datetime
-from bbq.constants import LOCAL_TZ
-
 temps = []
 
 
