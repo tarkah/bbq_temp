@@ -1,4 +1,5 @@
 import time
+from threading import Thread
 from queue import Queue
 from bbq import temps
 from bbq.constants import TEMP_TIMEOUT
@@ -16,3 +17,5 @@ def temp_timeout(queue):
         print('Seconds since last temp update: {}'.format(delta))
         if delta > TEMP_TIMEOUT:
             temps.clear()
+
+temp_thread = Thread(target=temp_timeout, args=(queue,))
