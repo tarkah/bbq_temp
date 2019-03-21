@@ -1,10 +1,12 @@
 import time
 from datetime import datetime
-from flask import request, render_template, jsonify
-from bbq import app, temps
+from flask import Flask, request, render_template, jsonify
+from bbq import temps
 from bbq.queue import queue
 from bbq.database import db_session
 from bbq.constants import TEMP_TIMEOUT, LOCAL_TZ
+
+app = Flask('bbq')
 
 
 @app.route('/')
