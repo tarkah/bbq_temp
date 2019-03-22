@@ -23,9 +23,11 @@ def api_temp():
                 response = { 'status': 'failure', 'error_message': 'Json empty or not valid' }
                 return jsonify(response)
             queue.put(time.time())
+            print(json)
             temps.append({'id': len(temps), 'temp1': json['Temp1'],
                           'temp2': json['Temp2'], 'volts': json['Volts'],
-                          'date': datetime.now(LOCAL_TZ)})
+                          'date': datetime.now(LOCAL_TZ), 'mac': json['MAC'], 
+                          'mode': json['Mode'], 'runtime': json['Runtime(ms)']})
             response = { 'status': 'success' }
             return jsonify(response)
         else:

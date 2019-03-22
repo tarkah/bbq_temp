@@ -11,6 +11,9 @@
           <TH>Temp1</TH>
           <TH>Temp2</TH>
           <TH>Volts</TH>
+          <TH>Mac</TH>
+          <TH>Mode</TH>
+          <TH>Runtime(ms)</TH>
           <TH>Time (Pacific)</TH>
         {% if temps %}
         {% for temp in temps|sort(attribute='id', reverse=True) %}
@@ -19,6 +22,9 @@
           <TD>{{temp.temp1}}</TD>
           <TD>{{temp.temp2}}</TD>
           <TD>{{temp.volts}}</TD>
+          <TD>{{temp.mac}}</TD>
+          <TD>{{temp.mode}}</TD>
+          <TD>{{temp.runtime}}</TD>
           <TD>{{temp.date.strftime('%H:%M:%S %Y-%m-%d')}}</TD>
         </TR>
         {% endfor %}
