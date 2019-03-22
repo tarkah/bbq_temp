@@ -32,12 +32,13 @@ class Device(Base):
 class Session(Base):
     __tablename__ = 'sessions'
     id = Column(Integer, primary_key=True)
-    device_session_id = Column(Integer)
+    device_session_id = Column(Integer, nullable=False)
     device_id = Column(Integer, ForeignKey('devices.id'), nullable=False)
     device = relationship(Device, primaryjoin=device_id == Device.id)
     temps = relationship("Temp", primaryjoin="Temp.session_id==Session.id")
-    created = Column(DateTime, nullable=False, default=utcnow())
+    created = Column(DateTime, nullable=False, default=utcnow())    
     last_modified = Column(DateTime, onupdate=utcnow())
+    completed = Column(DateTime)
 
     def __init__(self, Device=None):
         self.device_id = Device.id
@@ -50,7 +51,7 @@ class Session(Base):
 class Temp(Base):
     __tablename__ = 'temps'
     id = Column(Integer, primary_key=True)
-    sesssion_temp_id = Column(Integer)
+    sesssion_temp_id = Column(Integer, nullable=False)
     temp_1 = Column(Integer, nullable=False)
     temp_2 = Column(Integer, nullable=False)
     volts = Column(Float, nullable=False)
