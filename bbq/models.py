@@ -4,12 +4,15 @@ from sqlalchemy.sql import expression
 from sqlalchemy.ext.compiler import compiles
 from bbq.database import Base
 
+
 class utcnow(expression.FunctionElement):
     type = DateTime()
+
 
 @compiles(utcnow, 'sqlite')
 def sl_utcnow(element, compiler, **kw):
     return "DATETIME('now')"
+
 
 class Device(Base):
     __tablename__ = 'devices'
@@ -24,6 +27,7 @@ class Device(Base):
 
     def __repr__(self):
         return '<Device {}>'.format(self.mac)
+
 
 class Temp(Base):
     __tablename__ = 'temps'

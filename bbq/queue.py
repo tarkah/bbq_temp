@@ -6,6 +6,7 @@ from bbq.constants import TEMP_TIMEOUT
 
 queue = Queue()
 
+
 def temp_timeout(queue):
     last_update = time.time()
     while True:
@@ -17,5 +18,6 @@ def temp_timeout(queue):
         print('Seconds since last temp update: {}'.format(delta))
         if delta > TEMP_TIMEOUT:
             temps.clear()
+
 
 temp_thread = Thread(target=temp_timeout, args=(queue,))

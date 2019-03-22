@@ -2,8 +2,8 @@ import bbq
 
 
 def main():
-  bbq.temp_thread.start()
-  return bbq.app
+    bbq.temp_thread.start()
+    return bbq.app
 
 
 app = main()

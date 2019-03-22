@@ -20,21 +20,23 @@ def api_temp():
         if request.is_json:
             json = request.get_json(silent=True)
             if json is None:
-                response = { 'status': 'failure', 'error_message': 'Json empty or not valid' }
+                response = {'status': 'failure',
+                            'error_message': 'Json empty or not valid'}
                 return jsonify(response)
             queue.put(time.time())
             print(json)
             temps.append({'id': len(temps), 'temp1': json['Temp1'],
                           'temp2': json['Temp2'], 'volts': json['Volts'],
-                          'date': datetime.now(LOCAL_TZ), 'mac': json['MAC'], 
+                          'date': datetime.now(LOCAL_TZ), 'mac': json['MAC'],
                           'mode': json['Mode'], 'runtime': json['Runtime(ms)']})
-            response = { 'status': 'success' }
+            response = {'status': 'success'}
             return jsonify(response)
         else:
-            response = { 'status': 'failure', 'error_message': 'Must be application/json' }
+            response = {'status': 'failure',
+                        'error_message': 'Must be application/json'}
             return jsonify(response)
     else:
-        response = { 'status': 'success', 'data': temps }
+        response = {'status': 'success', 'data': temps}
         return jsonify(response)
 
 
@@ -44,7 +46,7 @@ def api_temp_id(id):
         temp = [temp for temp in temps if temp['id'] == id][0]
         response = {'status': 'succcess', 'data': temp}
     except:
-        response = {'status': 'failure', 'error_message': 'Invalid id' }
+        response = {'status': 'failure', 'error_message': 'Invalid id'}
     return jsonify(response)
 
 
