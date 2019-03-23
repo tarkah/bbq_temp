@@ -22,7 +22,10 @@ def index():
 def session(id):
     query = db_session.query(Session).filter(Session.id==id)
     session = query.first()
-    temps = session.temps
+    temps = db_session.query(Temp) \
+                      .filter(Temp.session_id==id) \
+                      .order_by(Temp.id.desc()) \
+                      .all()
     return render_template('temps.html', session=session, temps=temps)
 
 
