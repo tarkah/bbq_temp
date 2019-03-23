@@ -17,17 +17,24 @@
 </head>
 
 <body>
-    <!-- Your page contont -->
-    <h1>Simple BBQ Site</h1>
-    <br>
-    
-    {% block content %}
-    {% endblock%}
+    <div class="container">
+        <!-- header div-->
+        <div class="row">
+            <!-- Your page contont -->
+            <h1>Simple BBQ Site</h1>            
+        </div>
 
-    {% block scripts %}
-    <!-- Optional JavaScript -->
-    {{ bootstrap.load_js() }}
-    {% endblock %}
+        <!-- extends div-->
+        <div class="row">
+            {% block content %}
+            {% endblock%}
+
+            {% block scripts %}
+            <!-- Optional JavaScript -->
+            {{ bootstrap.load_js() }}
+            {% endblock %}
+        </div>
+    </div>
 </body>
 
 </html>

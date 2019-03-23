@@ -10,7 +10,7 @@
     </thead>
     <tbody>
         {% if devices %}
-        {% for device in devices %}
+        {% for device in devices|sort(attribute='last_session.created', reverse=True) %}
         <tr>
             <th scope="row">{{device.id}}</th>
             <td>{{device.mac}}</td>

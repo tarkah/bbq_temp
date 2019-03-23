@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
+<canvas id="myChart" height="150" ></canvas>
 <table class="table table-striped">
   <thead>
     <tr>
@@ -21,19 +22,66 @@
     {% for temp in temps|sort(attribute='id', reverse=True) %}
     <tr>
       <th scope="row">{{temp.id}}</th>
-      <TD>{{temp.session.device.id}}</TD>
-      <TD>{{temp.session_id}}</TD>
-      <TD>{{temp.sesssion_temp_id}}</TD>
-      <TD>{{temp.temp_1}}</TD>
-      <TD>{{temp.temp_2}}</TD>
-      <TD>{{temp.volts}}</TD>
-      <TD>{{temp.session.device.mac}}</TD>
-      <TD>{{temp.mode}}</TD>
-      <TD>{{temp.runtime_seconds}}</TD>
-      <TD>{{temp.created.strftime('%H:%M:%S %Y-%m-%d')}}</TD>
+      <td>{{temp.session.device.id}}</td>
+      <td>{{temp.session_id}}</td>
+      <td>{{temp.sesssion_temp_id}}</td>
+      <td>{{temp.temp_1}}</td>
+      <td>{{temp.temp_2}}</td>
+      <td>{{temp.volts}}</td>
+      <td>{{temp.session.device.mac}}</td>
+      <td>{{temp.mode}}</td>
+      <td>{{temp.runtime_seconds}}</td>
+      <td>{{temp.created.strftime('%H:%M:%S %Y-%m-%d')}}</td>
     </tr>
     {% endfor %}
     {% endif %}
   </tbody>
 </table>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+<script>
+    var timeFormat = 'HH:mm:ss';
+    var color = Chart.helpers.color;
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [{% for temp in temps %} "{{temp.created.strftime('%Y-%m-%d %H:%M:%S')}}", {% endfor %}],
+            datasets: [{
+                label: 'Temp 1',
+                data: [{% for temp in temps %} "{{temp.temp_1}}", {% endfor %}],
+                backgroundColor: color("rgb(255, 99, 132)").alpha(0.5).rgbString(),
+					      borderColor: "rgb(255, 99, 132)",
+					      fill: false              
+                    }, {
+              label: 'Temp 2',
+                data: [{% for temp in temps %} "{{temp.temp_2}}", {% endfor %}],                
+                backgroundColor: color("rgb(54, 162, 235)").alpha(0.5).rgbString(),
+					      borderColor: "rgb(54, 162, 235)",
+					      fill: false 
+            }]
+        },
+        options: {
+          scales: {
+					  xAxes: [{
+  						type: 'time',
+						  time: {
+  							parser: timeFormat,
+							  // round: 'day'
+							  tooltipFormat: 'll HH:mm:ss'
+						  },
+						  scaleLabel: {
+  							display: true,
+							  labelString: 'Date'
+						  }
+					  }],
+					  yAxes: [{
+  						scaleLabel: {
+							  display: true,
+							  labelString: 'value'
+						  }
+					  }]
+				  }
+        }
+    });
+    </script>
 {% endblock %}

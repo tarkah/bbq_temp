@@ -31,7 +31,7 @@ class Device(Base):
 
     @property
     def last_session(self):
-        query = db_session.query(Session).order_by(Session.created.desc())
+        query = db_session.query(Session).filter(Session.device_id==self.id).order_by(Session.created.desc())
         session = query.first()
         return session
 

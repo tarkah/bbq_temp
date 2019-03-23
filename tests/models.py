@@ -1,9 +1,9 @@
-from bbq.models import Device, Session, Temp
-from bbq.database import db_session
-from bbq.database import init_db
 import sys
 sys.path.append("..")
 
+from bbq.models import Device, Session, Temp
+from bbq.database import db_session
+from bbq.database import init_db
 
 init_db()
 
