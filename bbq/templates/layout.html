@@ -14,6 +14,14 @@
         body {
             padding-top: 80px;
         }
+
+        .align-items-center {
+            display: flex;
+            align-items: center;
+            /*Aligns vertically center */
+            justify-content: center;
+            /*Aligns horizontally center */
+        }
     </style>
     {% endblock %}
 
@@ -24,9 +32,16 @@
 <body>
     <!-- header nav-->
 
-    <nav class="container nav fixed-top bg-white justify-content-center mb-3 border-bottom">
-        <h1>Simple BBQ Site</h1>
-    </nav>
+    <div class="container nav fixed-top bg-white align-items-center border-bottom">
+        <span>
+            <h1>Simple BBQ Site |&nbsp;</h1>
+        </span>
+        <span>
+            <a href="{{ url_for('index') }}">
+                <h4>Home</h4>
+            </a>
+        </span>
+    </div>
 
 
     <main class="container" role="main">
