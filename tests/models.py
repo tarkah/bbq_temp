@@ -1,13 +1,12 @@
-import sys
-sys.path.append("..") 
-
+from bbq.models import Device, Session, Temp
+from bbq.database import db_session
 from bbq.database import init_db
+import sys
+sys.path.append("..")
+
 
 init_db()
 
-
-from bbq.database import db_session
-from bbq.models import Device, Session, Temp
 
 d = Device('AABBCCDDEEFF')
 d2 = Device('FFEEDDCCBBAA')
@@ -32,13 +31,13 @@ db_session.add(s2)
 db_session.commit()
 
 s = db_session.query(Session).all()[0]
-for x in range(0,10):
+for x in range(0, 10):
     t = Temp(s, 150, 200, 5.55)
     db_session.add(t)
     db_session.commit()
 
 s = db_session.query(Session).all()[1]
-for x in range(0,10):
+for x in range(0, 10):
     t = Temp(s, 150, 200, 5.55)
     db_session.add(t)
     db_session.commit()

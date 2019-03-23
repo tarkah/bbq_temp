@@ -20,7 +20,8 @@ class Device(Base):
     mac = Column(String, unique=True)
     created = Column(DateTime, nullable=False, default=utcnow())
     last_modified = Column(DateTime, onupdate=utcnow())
-    sessions = relationship("Session", primaryjoin="Session.device_id==Device.id")
+    sessions = relationship(
+        "Session", primaryjoin="Session.device_id==Device.id")
 
     def __init__(self, mac=None):
         self.mac = mac
@@ -36,7 +37,7 @@ class Session(Base):
     device_id = Column(Integer, ForeignKey('devices.id'), nullable=False)
     device = relationship(Device, primaryjoin=device_id == Device.id)
     temps = relationship("Temp", primaryjoin="Temp.session_id==Session.id")
-    created = Column(DateTime, nullable=False, default=utcnow())    
+    created = Column(DateTime, nullable=False, default=utcnow())
     last_modified = Column(DateTime, onupdate=utcnow())
     completed = Column(DateTime)
 
