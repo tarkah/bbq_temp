@@ -1,12 +1,14 @@
 import time
 from datetime import datetime
 from flask import Flask, request, render_template, jsonify
+from flask_bootstrap import Bootstrap
 from bbq import temps
 from bbq.database import db_session
 from bbq.models import Device, Session, Temp
 from bbq.constants import TEMP_TIMEOUT, LOCAL_TZ
 
 app = Flask('bbq')
+bootstrap = Bootstrap(app)
 
 
 @app.route('/')

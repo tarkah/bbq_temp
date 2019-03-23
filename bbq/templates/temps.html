@@ -1,40 +1,39 @@
-<title>BBQ Temps</title>
-<head>
-  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/table.css') }}">
-</head>
-<body>
-    BBQ Temps for Session {{ session.id }}
-      <br><br>
-      <table>
-        <TR>
-          <TH>Temp Id</TH>
-          <TH>Device Id</TH>
-          <TH>Session Id</TH>
-          <TH>Session Temp Id</TH>
-          <TH>Temp1</TH>
-          <TH>Temp2</TH>
-          <TH>Volts</TH>
-          <TH>Mac</TH>
-          <TH>Mode</TH>
-          <TH>Runtime(s)</TH>
-          <TH>Time (Pacific)</TH>
-        {% if temps %}
-        {% for temp in temps|sort(attribute='id', reverse=True) %}
-        <TR>
-          <TD>{{temp.id}}</TD>
-          <TD>{{temp.session.device.id}}</TD>
-          <TD>{{temp.session_id}}</TD>
-          <TD>{{temp.sesssion_temp_id}}</TD>
-          <TD>{{temp.temp_1}}</TD>
-          <TD>{{temp.temp_2}}</TD>
-          <TD>{{temp.volts}}</TD>
-          <TD>{{temp.session.device.mac}}</TD>
-          <TD>{{temp.mode}}</TD>
-          <TD>{{temp.runtime_seconds}}</TD>
-          <TD>{{temp.created.strftime('%H:%M:%S %Y-%m-%d')}}</TD>
-        </TR>
-        {% endfor %}
-        {% endif %}
-      </table>
-    </body>
-
+{% extends "layout.html" %}
+{% block content %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Temp Id</th>
+      <th scope="col">Device Id</th>
+      <th scope="col">Session Id</th>
+      <th scope="col">Session Temp Id</th>
+      <th scope="col">Temp1</th>
+      <th scope="col">Temp2</th>
+      <th scope="col">Volts</th>
+      <th scope="col">Mac</th>
+      <th scope="col">Mode</th>
+      <th scope="col">Runtime(s)</th>
+      <th scope="col">Time (Pacific)</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% if temps %}
+    {% for temp in temps|sort(attribute='id', reverse=True) %}
+    <tr>
+      <th scope="row">{{temp.id}}</th>
+      <TD>{{temp.session.device.id}}</TD>
+      <TD>{{temp.session_id}}</TD>
+      <TD>{{temp.sesssion_temp_id}}</TD>
+      <TD>{{temp.temp_1}}</TD>
+      <TD>{{temp.temp_2}}</TD>
+      <TD>{{temp.volts}}</TD>
+      <TD>{{temp.session.device.mac}}</TD>
+      <TD>{{temp.mode}}</TD>
+      <TD>{{temp.runtime_seconds}}</TD>
+      <TD>{{temp.created.strftime('%H:%M:%S %Y-%m-%d')}}</TD>
+    </tr>
+    {% endfor %}
+    {% endif %}
+  </tbody>
+</table>
+{% endblock %}

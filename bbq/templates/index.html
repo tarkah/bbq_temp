@@ -1,27 +1,26 @@
-<title>BBQ Temps</title>
-<head>
-  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/table.css') }}">
-</head>
-<body>
-    Simple Site for BBQ Temp
-      <br><br>
-      Devices
-      <table>
-        <TR>
-          <TH>Device Id</TH>
-          <TH>Mac</TH>
-          <TH>Last Session</TH>
-               
+{% extends "layout.html" %}
+{% block content %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Device Id</th>
+            <th scope="col">Mac</th>
+            <th scope="col">Last Session</th>
+        </tr>
+    </thead>
+    <tbody>
         {% if devices %}
         {% for device in devices %}
-        <TR>
-          <TD>{{device.id}}</TD>
-          <TD>{{device.mac}}</TD>
-          <TD><a href="{{ url_for('session', id=device.last_session.id) }}">{{device.last_session.created}}</a></TD>          
-          
-        </TR>
+        <tr>
+            <th scope="row">{{device.id}}</th>
+            <td>{{device.mac}}</td>
+            <td>
+                <a href="{{ url_for('session', id=device.last_session.id) }}">
+                    {{device.last_session.created}}
+                </a></td>
+        </tr>
         {% endfor %}
         {% endif %}
-      </table>
-    </body>
-
+    </tbody>
+</table>
+{% endblock %}
