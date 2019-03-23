@@ -1,51 +1,43 @@
 {% extends "layout.html" %}
 {% block content %}
+<div class="row justify-content-center mb-3">
 <canvas id="myChart" height="150" ></canvas>
-<table class="table table-striped">
+</div>
+<div class="row justify-content-center">
+<table class="table table-striped table-hover table-sm text-center">
   <thead>
     <tr>
-      <th scope="col">Temp Id</th>
-      <th scope="col">Device Id</th>
-      <th scope="col">Session Id</th>
-      <th scope="col">Session Temp Id</th>
+      <th scope="col">Id</th>
       <th scope="col">Temp1</th>
       <th scope="col">Temp2</th>
       <th scope="col">Volts</th>
-      <th scope="col">Mac</th>
-      <th scope="col">Mode</th>
-      <th scope="col">Runtime(s)</th>
-      <th scope="col">Time (Pacific)</th>
+      <th scope="col">Time</th>
     </tr>
   </thead>
   <tbody>
     {% if temps %}
     {% for temp in temps|sort(attribute='id', reverse=True) %}
     <tr>
-      <th scope="row">{{temp.id}}</th>
-      <td>{{temp.session.device.id}}</td>
-      <td>{{temp.session_id}}</td>
-      <td>{{temp.sesssion_temp_id}}</td>
+      <th scope="row">{{temp.sesssion_temp_id}}</td>
       <td>{{temp.temp_1}}</td>
       <td>{{temp.temp_2}}</td>
       <td>{{temp.volts}}</td>
-      <td>{{temp.session.device.mac}}</td>
-      <td>{{temp.mode}}</td>
-      <td>{{temp.runtime_seconds}}</td>
-      <td>{{temp.created.strftime('%H:%M:%S %Y-%m-%d')}}</td>
+      <td>{{temp.created_local.strftime('%H:%M:%S')}}</td>
     </tr>
     {% endfor %}
     {% endif %}
   </tbody>
 </table>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
 <script>
-    var timeFormat = 'HH:mm:ss';
+    var timeFormat = 'YYYY-MM-DD HH:mm:ss';
     var color = Chart.helpers.color;
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: [{% for temp in temps %} "{{temp.created.strftime('%Y-%m-%d %H:%M:%S')}}", {% endfor %}],
+            labels: [{% for temp in temps %} "{{temp.created_local.strftime('%Y-%m-%d %H:%M:%S')}}", {% endfor %}],
             datasets: [{
                 label: 'Temp 1',
                 data: [{% for temp in temps %} "{{temp.temp_1}}", {% endfor %}],
@@ -67,16 +59,22 @@
 						  time: {
   							parser: timeFormat,
 							  // round: 'day'
-							  tooltipFormat: 'll HH:mm:ss'
+							  tooltipFormat: 'HH:mm:ss',
+                displayFormats: {
+                        quarter: 'HH:mm:ss'
+                }
 						  },
+              ticks: {
+                source: 'auto'
+              },
 						  scaleLabel: {
-  							display: true,
+  							display: false,
 							  labelString: 'Date'
 						  }
 					  }],
 					  yAxes: [{
   						scaleLabel: {
-							  display: true,
+							  display: false,
 							  labelString: 'value'
 						  }
 					  }]

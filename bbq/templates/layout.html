@@ -10,6 +10,11 @@
     {% block styles %}
     <!-- Bootstrap CSS -->
     {{ bootstrap.load_css() }}
+    <style>
+        body {
+            padding-top: 80px;
+        }
+    </style>
     {% endblock %}
 
     <title>BBQ Temps</title>
@@ -17,24 +22,24 @@
 </head>
 
 <body>
-    <div class="container">
-        <!-- header div-->
-        <div class="row">
-            <!-- Your page contont -->
-            <h1>Simple BBQ Site</h1>            
-        </div>
+    <!-- header nav-->
 
-        <!-- extends div-->
-        <div class="row">
-            {% block content %}
-            {% endblock%}
+    <nav class="container nav fixed-top bg-white justify-content-center mb-3 border-bottom">
+        <h1>Simple BBQ Site</h1>
+    </nav>
 
-            {% block scripts %}
-            <!-- Optional JavaScript -->
-            {{ bootstrap.load_js() }}
-            {% endblock %}
-        </div>
-    </div>
+
+    <main class="container" role="main">
+        <!-- extends -->
+        {% block content %}
+        {% endblock%}
+
+        {% block scripts %}
+        <!-- Optional JavaScript -->
+        {{ bootstrap.load_js() }}
+        {% endblock %}
+    </main>
+
 </body>
 
 </html>

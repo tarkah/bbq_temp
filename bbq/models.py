@@ -1,3 +1,6 @@
+import datetime
+import pytz
+from bbq.constants import LOCAL_TZ
 from sqlalchemy import Column, Integer, String, DateTime, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import expression
@@ -35,6 +38,12 @@ class Device(Base):
         session = query.first()
         return session
 
+    @property
+    def created_local(self):
+        created_aware = pytz.utc.localize(self.created)
+        created_local = created_aware.astimezone(LOCAL_TZ)
+        return created_local
+
 
 class Session(Base):
     __tablename__ = 'sessions'
@@ -53,6 +62,12 @@ class Session(Base):
 
     def __repr__(self):
         return '<Session {}/{} - Device {}>'.format(self.id, self.device_session_id, self.device.id)
+
+    @property
+    def created_local(self):
+        created_aware = pytz.utc.localize(self.created)
+        created_local = created_aware.astimezone(LOCAL_TZ)
+        return created_local
 
 
 class Temp(Base):
@@ -82,3 +97,9 @@ class Temp(Base):
 
     def __repr__(self):
         return '<Temp {}/{} - Session {}>'.format(self.id, self.sesssion_temp_id, self.session_id)
+
+    @property
+    def created_local(self):
+        created_aware = pytz.utc.localize(self.created)
+        created_local = created_aware.astimezone(LOCAL_TZ)
+        return created_local

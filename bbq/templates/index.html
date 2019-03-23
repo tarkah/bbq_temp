@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-<table class="table table-striped">
+<div class="row justify-content-center">
+<table class="table table-striped table-hover text-center">
     <thead>
         <tr>
             <th scope="col">Device Id</th>
@@ -10,17 +11,18 @@
     </thead>
     <tbody>
         {% if devices %}
-        {% for device in devices|sort(attribute='last_session.created', reverse=True) %}
+        {% for device in devices|sort(attribute='last_session.created_local', reverse=True) %}
         <tr>
             <th scope="row">{{device.id}}</th>
             <td>{{device.mac}}</td>
             <td>
                 <a href="{{ url_for('session', id=device.last_session.id) }}">
-                    {{device.last_session.created}}
+                    {{device.last_session.created_local}}
                 </a></td>
         </tr>
         {% endfor %}
         {% endif %}
     </tbody>
 </table>
+</div>
 {% endblock %}

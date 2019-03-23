@@ -4,14 +4,14 @@ import json
 import time
 
 url = 'http://127.0.0.1:8085/api/temp'
-mac = '__CORYTEST_2'
+mac = '__CORYTEST_4'
 headers = {'Content-Type': 'application/json'}
 
 temp_1 = 300
 temp_2 = 330
 rt = 0
 
-for x in range(0,100):
+for x in range(0,60):
     if x < 26:
         temp_1 += 1
         temp_2 += 2
@@ -29,5 +29,5 @@ for x in range(0,100):
 
     r = requests.post(url, data=json.dumps(data), headers=headers)
     print(r.json())
-    time.sleep(1)
-    rt += 1
+    time.sleep(30)
+    rt += 30
