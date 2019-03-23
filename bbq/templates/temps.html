@@ -43,13 +43,19 @@
                 data: [{% for temp in temps %} "{{temp.temp_1}}", {% endfor %}],
                 backgroundColor: color("rgb(255, 99, 132)").alpha(0.5).rgbString(),
 					      borderColor: "rgb(255, 99, 132)",
-					      fill: false              
+					      pointRadius: 0,
+					      fill: false,
+					      lineTension: 0,
+					      borderWidth: 2            
                     }, {
               label: 'Temp 2',
                 data: [{% for temp in temps %} "{{temp.temp_2}}", {% endfor %}],                
                 backgroundColor: color("rgb(54, 162, 235)").alpha(0.5).rgbString(),
 					      borderColor: "rgb(54, 162, 235)",
-					      fill: false 
+					      pointRadius: 0,
+					      fill: false,
+					      lineTension: 0,
+					      borderWidth: 2 
             }]
         },
         options: {
@@ -65,7 +71,7 @@
                 }
 						  },
               ticks: {
-                source: 'auto'
+                autoSkip: true
               },
 						  scaleLabel: {
   							display: false,
@@ -78,7 +84,21 @@
 							  labelString: 'value'
 						  }
 					  }]
-				  }
+				  },
+          tooltips: {
+					  intersect: false,
+					  mode: 'index',
+					  callbacks: {
+						  label: function(tooltipItem, myData) {
+							  var label = myData.datasets[tooltipItem.datasetIndex].label || '';
+							  if (label) {
+  								label += ': ';
+							  }
+							  label += tooltipItem.yLabel;
+  							return label;
+						  }
+				  	}
+				}
         }
     });
     </script>
