@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, DateTime, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import expression
 from sqlalchemy.ext.compiler import compiles
-from bbq.database import Base
+from bbq.database import Base, db_session
 
 
 class utcnow(expression.FunctionElement):
@@ -28,6 +28,12 @@ class Device(Base):
 
     def __repr__(self):
         return '<Device {} - {}>'.format(self.id, self.mac)
+
+    @property
+    def last_session(self):
+        query = db_session.query(Session).order_by(Session.created.desc())
+        session = query.first()
+        return session
 
 
 class Session(Base):

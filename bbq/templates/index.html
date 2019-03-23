@@ -5,29 +5,20 @@
 <body>
     Simple Site for BBQ Temp
       <br><br>
+      Devices
       <table>
         <TR>
-          <TH>Temp Id</TH>
-          <TH>Session Id</TH>
-          <TH>Temp1</TH>
-          <TH>Temp2</TH>
-          <TH>Volts</TH>
+          <TH>Device Id</TH>
           <TH>Mac</TH>
-          <TH>Mode</TH>
-          <TH>Runtime(s)</TH>
-          <TH>Time (Pacific)</TH>
-        {% if temps %}
-        {% for temp in temps %}
+          <TH>Last Session</TH>
+               
+        {% if devices %}
+        {% for device in devices %}
         <TR>
-          <TD>{{temp.id}}</TD>
-          <TD>{{temp.session_id}}</TD>
-          <TD>{{temp.temp_1}}</TD>
-          <TD>{{temp.temp_2}}</TD>
-          <TD>{{temp.volts}}</TD>
-          <TD>{{temp.session.device.mac}}</TD>
-          <TD>{{temp.mode}}</TD>
-          <TD>{{temp.runtime_seconds}}</TD>
-          <TD>{{temp.created.strftime('%H:%M:%S %Y-%m-%d')}}</TD>
+          <TD>{{device.id}}</TD>
+          <TD>{{device.mac}}</TD>
+          <TD><a href="{{ url_for('session', id=device.last_session.id) }}">{{device.last_session.created}}</a></TD>          
+          
         </TR>
         {% endfor %}
         {% endif %}

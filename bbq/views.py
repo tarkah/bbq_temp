@@ -11,9 +11,17 @@ app = Flask('bbq')
 
 @app.route('/')
 def index():
-    query = db_session.query(Temp).order_by(Temp.id.desc())
-    temps = query.all()
-    return render_template('index.html', temps=temps)
+    query = db_session.query(Device)
+    devices = query.all()
+    return render_template('index.html', devices=devices)
+
+
+@app.route('/session/<int:id>', methods=['GET'])
+def session(id):
+    query = db_session.query(Session).filter(Session.id==id)
+    session = query.first()
+    temps = session.temps
+    return render_template('temps.html', session=session, temps=temps)
 
 
 @app.route('/api/temp', methods=['GET', 'POST'])

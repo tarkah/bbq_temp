@@ -1,0 +1,40 @@
+<title>BBQ Temps</title>
+<head>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/table.css') }}">
+</head>
+<body>
+    BBQ Temps for Session {{ session.id }}
+      <br><br>
+      <table>
+        <TR>
+          <TH>Temp Id</TH>
+          <TH>Device Id</TH>
+          <TH>Session Id</TH>
+          <TH>Session Temp Id</TH>
+          <TH>Temp1</TH>
+          <TH>Temp2</TH>
+          <TH>Volts</TH>
+          <TH>Mac</TH>
+          <TH>Mode</TH>
+          <TH>Runtime(s)</TH>
+          <TH>Time (Pacific)</TH>
+        {% if temps %}
+        {% for temp in temps|sort(attribute='id', reverse=True) %}
+        <TR>
+          <TD>{{temp.id}}</TD>
+          <TD>{{temp.session.device.id}}</TD>
+          <TD>{{temp.session_id}}</TD>
+          <TD>{{temp.sesssion_temp_id}}</TD>
+          <TD>{{temp.temp_1}}</TD>
+          <TD>{{temp.temp_2}}</TD>
+          <TD>{{temp.volts}}</TD>
+          <TD>{{temp.session.device.mac}}</TD>
+          <TD>{{temp.mode}}</TD>
+          <TD>{{temp.runtime_seconds}}</TD>
+          <TD>{{temp.created.strftime('%H:%M:%S %Y-%m-%d')}}</TD>
+        </TR>
+        {% endfor %}
+        {% endif %}
+      </table>
+    </body>
+
