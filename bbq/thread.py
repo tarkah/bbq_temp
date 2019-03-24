@@ -19,7 +19,7 @@ def temp_timeout(db_session):
             print('Session {}. Seconds since last temp update: {}'.format(
                 session.id, seconds))
             if seconds > TEMP_TIMEOUT:
-                session.completed = datetime.datetime.utcnow()
+                session.completed = temp.created
                 db_session.commit()
         time.sleep(10)
 
