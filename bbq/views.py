@@ -2,7 +2,6 @@ import time
 from datetime import datetime
 from flask import Flask, request, render_template, jsonify
 from flask_bootstrap import Bootstrap
-from bbq import temps
 from bbq.database import db_session
 from bbq.models import Device, Session, Temp
 from bbq.constants import TEMP_TIMEOUT, LOCAL_TZ
@@ -55,11 +54,7 @@ def api_temp():
 
 @app.route('/api/temp/<int:id>', methods=['GET'])
 def api_temp_id(id):
-    try:
-        temp = [temp for temp in temps if temp['id'] == id][0]
-        response = {'status': 'succcess', 'data': temp}
-    except:
-        response = {'status': 'failure', 'error_message': 'Invalid id'}
+    response = {'status': 'failure', 'error_message': 'Not yet implemented'}
     return jsonify(response)
 
 

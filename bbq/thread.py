@@ -1,13 +1,12 @@
 import time
 import datetime
 from threading import Thread
-from bbq import temps
 from bbq.constants import TEMP_TIMEOUT
 from bbq.database import db_session
 from bbq.models import Session, Temp
 
 
-def temp_timeout():
+def temp_timeout(db_session):
     while True:
         query = db_session.query(Session).filter(Session.completed.is_(None))
         sessions = query.all()
@@ -25,4 +24,4 @@ def temp_timeout():
         time.sleep(10)
 
 
-temp_thread = Thread(target=temp_timeout)
+temp_thread = Thread(target=temp_timeout, args=(db_session,), daemon=True)
