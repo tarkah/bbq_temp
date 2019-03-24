@@ -28,6 +28,14 @@ def session(id):
     return render_template('temps.html', session=session, temps=temps)
 
 
+@app.route('/device/<int:id>', methods=['GET'])
+def device(id):
+    query = db_session.query(Device).filter(Device.id==id)
+    device = query.first()
+    sessions = device.sessions
+    return render_template('device.html', device=device, sessions=sessions)
+
+
 @app.route('/api/temp', methods=['GET', 'POST'])
 def api_temp():
     if request.method == 'POST':

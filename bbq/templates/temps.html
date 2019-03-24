@@ -7,6 +7,7 @@
 <table class="table table-sm text-center">
   <thead>
     <tr>
+      <th scope="col">Last Update</th>
       <th scope="col">Current Temp 1</th>
       <th scope="col">Current Temp 2</th>
       <th scope="col">Current Volts</th>
@@ -15,6 +16,7 @@
   <tbody>
     {% if temps %}
     <tr>
+      <td>{{temps[0].created_local.strftime('%H:%M:%S')}}</td>
       <td>{{temps[0].temp_1}}</td>
       <td>{{temps[0].temp_2}}</td>
       <td>{{temps[0].volts}}</td>

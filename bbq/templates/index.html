@@ -14,10 +14,12 @@
         {% for device in devices|sort(attribute='last_session.created_local', reverse=True) %}
         <tr>
             <th scope="row">{{device.id}}</th>
-            <td>{{device.mac}}</td>
+            <td><a href="{{ url_for('device', id=device.id) }}">
+                    {{device.mac}}
+                </a></td>
             <td>
                 <a href="{{ url_for('session', id=device.last_session.id) }}">
-                    {{device.last_session.created_local}}
+                    {{device.last_session.created_local.strftime('%b %-m, %Y %H:%M:%S')}}
                 </a></td>
         </tr>
         {% endfor %}
