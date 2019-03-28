@@ -14,7 +14,7 @@
         <tr>
             <th scope="row">{{session.device_session_id}}</th>
             <td>
-                <a href="{{ url_for('session', id=device.last_session.id) }}">
+                <a href="{{ url_for('session', id=session.id) }}">
                     {{session.created_local.strftime('%b %d, %Y %I:%M:%S %p')}}
                 </a>
             </td>
