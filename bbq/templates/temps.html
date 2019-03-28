@@ -16,7 +16,7 @@
   <tbody>
     {% if temps %}
     <tr>
-      <td>{{temps[0].created_local.strftime('%H:%M:%S')}}</td>
+      <td>{{temps[0].created_local.strftime('%I:%M:%S %p')}}</td>
       <td>{{temps[0].temp_1}}</td>
       <td>{{temps[0].temp_2}}</td>
       <td>{{temps[0].volts}}</td>
@@ -48,7 +48,7 @@
       <td>{{temp.temp_1}}</td>
       <td>{{temp.temp_2}}</td>
       <td>{{temp.volts}}</td>
-      <td>{{temp.created_local.strftime('%H:%M:%S')}}</td>
+      <td>{{temp.created_local.strftime('%I:%M:%S %p')}}</td>
     </tr>
     {% endfor %}
     {% endif %}
@@ -58,13 +58,13 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
 <script>
-    var timeFormat = 'YYYY-MM-DD HH:mm:ss';
+    var timeFormat = 'YYYY-MM-DD h:mm:ss a';
     var color = Chart.helpers.color;
     var ctx = document.getElementById('myChart').getContext('2d');
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: [{% for temp in temps %} "{{temp.created_local.strftime('%Y-%m-%d %H:%M:%S')}}", {% endfor %}],
+            labels: [{% for temp in temps %} "{{temp.created_local.strftime('%Y-%m-%d %I:%M:%S %p')}}", {% endfor %}],
             datasets: [{
                 label: 'Temp 1',
                 data: [{% for temp in temps %} "{{temp.temp_1}}", {% endfor %}],
@@ -92,9 +92,9 @@
 						  time: {
   							parser: timeFormat,
 							  // round: 'day'
-							  tooltipFormat: 'HH:mm:ss',
+							  tooltipFormat: 'h:mm:ss a',
                 displayFormats: {
-                        quarter: 'HH:mm:ss'
+                        quarter: 'h:mm:ss a'
                 }
 						  },
               ticks: {

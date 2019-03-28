@@ -19,7 +19,7 @@
                 </a></td>
             <td>
                 <a href="{{ url_for('session', id=device.last_session.id) }}">
-                    {{device.last_session.created_local.strftime('%b %-m, %Y %H:%M:%S')}}
+                    {{device.last_session.created_local.strftime('%b %d, %Y %I:%M:%S %p')}}
                 </a></td>
         </tr>
         {% endfor %}
