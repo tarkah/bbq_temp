@@ -66,6 +66,14 @@ def api_temp_id(id):
     return jsonify(response)
 
 
+@app.route('/api/session/<int:id>', methods=['GET'])
+def api_session(id):
+    query = db_session.query(Session).filter(Session.id==id)
+    session = query.first()
+    data = session.asdict()
+    response = {'status': 'success', 'data': data}
+    return jsonify(response)
+
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     db_session.remove()

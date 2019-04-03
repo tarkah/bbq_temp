@@ -63,6 +63,9 @@ class Session(Base):
     def __repr__(self):
         return '<Session {}/{} - Device {}>'.format(self.id, self.device_session_id, self.device.id)
 
+    def asdict(self):
+        return {'id': self.id, 'device_session_id': self.device_session_id, 'device_id': self.device_id, 'created_local': self.created_local}
+
     @property
     def created_local(self):
         created_aware = pytz.utc.localize(self.created)
@@ -97,6 +100,11 @@ class Temp(Base):
 
     def __repr__(self):
         return '<Temp {}/{} - Session {}>'.format(self.id, self.sesssion_temp_id, self.session_id)
+
+    def asdict(self):
+        return {'id': self.id, 'session_temp_id': self.session_temp_id, 'session_id': self.session_id, 'temp_1': self.temp_1,
+                'temp_2': self.temp_2, 'volts': self.volts, 'mode': self.mode, 'runtime_seconds': self.runtime_seconds,
+                'created_local': self.created_local}
 
     @property
     def created_local(self):
