@@ -11,7 +11,7 @@ temp_1 = 300
 temp_2 = 330
 rt = 0
 
-for x in range(0,120):
+for x in range(0,500):
     if x < 26:
         temp_1 += 1
         temp_2 += 2
@@ -29,5 +29,5 @@ for x in range(0,120):
 
     r = requests.post(url, data=json.dumps(data), headers=headers)
     print(r.json())
-    time.sleep(5)
+    time.sleep(1)
     rt += 30
