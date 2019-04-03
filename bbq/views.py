@@ -21,8 +21,7 @@ def index():
 def session(id):
     query = db_session.query(Session).filter(Session.id==id)
     session = query.first()
-    temps = [temp for temp in session.temps[::-1]]
-    return render_template('temps.html', session=session, temps=temps)
+    return render_template('temps.html', session=session)
 
 
 @app.route('/device/<int:id>', methods=['GET'])
