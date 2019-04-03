@@ -64,7 +64,8 @@ class Session(Base):
         return '<Session {}/{} - Device {}>'.format(self.id, self.device_session_id, self.device.id)
 
     def asdict(self):
-        return {'id': self.id, 'device_session_id': self.device_session_id, 'device_id': self.device_id, 'created': self.created}
+        return {'id': self.id, 'device_session_id': self.device_session_id,
+                'device_id': self.device_id, 'created': self.created, 'completed': self.completed}
 
     @property
     def created_local(self):

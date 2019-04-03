@@ -72,7 +72,8 @@
       temp_headers: [],
       temp_1_data: [],
       temp_2_data: [],
-      chart: null
+      chart: null,
+      session_completed: null
     },
     delimiters: ['[[', ']]'],
     methods: {
@@ -159,28 +160,37 @@
         this.chart.update()
       },
       getTemps: function () {
-        const url = `/api/session/{{ session.id }}/temps`
+        if (this.session_completed != null) {
 
-        axios
-          .get(url)
-          .then(response => {
-            this.temps = response.data.data
+          clearInterval(this.interval)
 
-            this.temp_headers = response.data.data.map(list => {
-              return moment(list.created).format("YYYY-MM-DD h:mm:ss a")
+        } else {
+
+          const url = `/api/session/{{ session.id }}/temps`
+
+          axios
+            .get(url)
+            .then(response => {
+              this.temps = response.data.data.temps
+
+              this.temp_headers = response.data.data.temps.map(list => {
+                return moment(list.created).format("YYYY-MM-DD h:mm:ss a")
+              })
+
+              this.temp_1_data = response.data.data.temps.map(list => {
+                return list.temp_1
+              })
+
+              this.temp_2_data = response.data.data.temps.map(list => {
+                return list.temp_2
+              })
+
+              this.session_completed = response.data.data.session.completed
             })
-
-            this.temp_1_data = response.data.data.map(list => {
-              return list.temp_1
-            })
-
-            this.temp_2_data = response.data.data.map(list => {
-              return list.temp_2
-            })
-          })
-      }      
+        }
+      }
     },
-    created: function () {      
+    created: function () {
       this.newChart()
       this.getTemps()
       this.interval = setInterval(() => this.getTemps(), 5000)

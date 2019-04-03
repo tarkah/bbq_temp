@@ -66,17 +66,8 @@ def api_temp_id(id):
 def api_session(id):
     query = db_session.query(Session).filter(Session.id==id)
     session = query.first()
-    data = session.asdict()
-    response = {'status': 'success', 'data': data}
-    return jsonify(response)
-
-
-@app.route('/api/session/<int:id>/temps/last', methods=['GET'])
-def api_session_last_temp(id):
-    query = db_session.query(Session).filter(Session.id==id)
-    session = query.first()
-    data = session.last_temp.asdict()
-    response = {'status': 'success', 'data': data}
+    session = session.asdict()
+    response = {'status': 'success', 'data': {'session': session}}
     return jsonify(response)
 
 
@@ -85,8 +76,19 @@ def api_session_temps(id):
     query = db_session.query(Session).filter(Session.id==id)
     session = query.first()
     temps = session.temps
-    data = [temp.asdict() for temp in temps[::-1]]
-    response = {'status': 'success', 'data': data}
+    session = session.asdict()
+    temps = [temp.asdict() for temp in temps[::-1]]
+    response = {'status': 'success', 'data': {'session': session, 'temps': temps}}
+    return jsonify(response)
+
+
+@app.route('/api/session/<int:id>/temps/last', methods=['GET'])
+def api_session_last_temp(id):
+    query = db_session.query(Session).filter(Session.id==id)
+    session = query.first()
+    session = session.asdict()
+    temps = [session.last_temp.asdict()]
+    response = {'status': 'success', 'data': {'session': session, 'temps': temps}}
     return jsonify(response)
 
 
