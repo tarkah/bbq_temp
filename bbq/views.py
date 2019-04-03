@@ -21,10 +21,7 @@ def index():
 def session(id):
     query = db_session.query(Session).filter(Session.id==id)
     session = query.first()
-    temps = db_session.query(Temp) \
-                      .filter(Temp.session_id==id) \
-                      .order_by(Temp.id.desc()) \
-                      .all()
+    temps = [temp for temp in session.temps[::-1]]
     return render_template('temps.html', session=session, temps=temps)
 
 
@@ -73,6 +70,26 @@ def api_session(id):
     data = session.asdict()
     response = {'status': 'success', 'data': data}
     return jsonify(response)
+
+
+@app.route('/api/session/<int:id>/temps/last', methods=['GET'])
+def api_session_last_temp(id):
+    query = db_session.query(Session).filter(Session.id==id)
+    session = query.first()
+    data = session.last_temp.asdict()
+    response = {'status': 'success', 'data': data}
+    return jsonify(response)
+
+
+@app.route('/api/session/<int:id>/temps', methods=['GET'])
+def api_session_temps(id):
+    query = db_session.query(Session).filter(Session.id==id)
+    session = query.first()
+    temps = session.temps
+    data = [temp.asdict() for temp in temps[::-1]]
+    response = {'status': 'success', 'data': data}
+    return jsonify(response)
+
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):

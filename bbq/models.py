@@ -64,7 +64,7 @@ class Session(Base):
         return '<Session {}/{} - Device {}>'.format(self.id, self.device_session_id, self.device.id)
 
     def asdict(self):
-        return {'id': self.id, 'device_session_id': self.device_session_id, 'device_id': self.device_id, 'created_local': self.created_local}
+        return {'id': self.id, 'device_session_id': self.device_session_id, 'device_id': self.device_id, 'created': self.created}
 
     @property
     def created_local(self):
@@ -72,6 +72,11 @@ class Session(Base):
         created_local = created_aware.astimezone(LOCAL_TZ)
         return created_local
 
+    @property
+    def last_temp(self):
+        query = db_session.query(Temp).filter(Temp.session_id==self.id).order_by(Temp.created.desc())
+        temp = query.first()
+        return temp
 
 class Temp(Base):
     __tablename__ = 'temps'
@@ -102,9 +107,9 @@ class Temp(Base):
         return '<Temp {}/{} - Session {}>'.format(self.id, self.sesssion_temp_id, self.session_id)
 
     def asdict(self):
-        return {'id': self.id, 'session_temp_id': self.session_temp_id, 'session_id': self.session_id, 'temp_1': self.temp_1,
+        return {'id': self.id, 'session_temp_id': self.sesssion_temp_id, 'session_id': self.session_id, 'temp_1': self.temp_1,
                 'temp_2': self.temp_2, 'volts': self.volts, 'mode': self.mode, 'runtime_seconds': self.runtime_seconds,
-                'created_local': self.created_local}
+                'created': self.created}
 
     @property
     def created_local(self):
