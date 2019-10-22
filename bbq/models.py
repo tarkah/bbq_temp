@@ -44,6 +44,10 @@ class Device(Base):
         created_local = created_aware.astimezone(LOCAL_TZ)
         return created_local
 
+    def asdict(self):
+        return {'id': self.id, 'mac': self.mac,
+                'created': self.created, 'last_modified': self.last_modified}
+
 
 class Session(Base):
     __tablename__ = 'sessions'

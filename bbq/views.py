@@ -91,6 +91,12 @@ def api_session_last_temp(id):
     response = {'status': 'success', 'data': {'session': session, 'temps': temps}}
     return jsonify(response)
 
+@app.route('/api/devices', methods=['GET'])
+def api_devices():
+    query = db_session.query(Device).all()
+    devices = [device.asdict() for device in query[::-1]]
+    response = {'status': 'success', 'data': {'devices': devices}}
+    return jsonify(response)
 
 @app.teardown_appcontext
 def shutdown_session(exception=None):
