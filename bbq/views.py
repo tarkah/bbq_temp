@@ -98,6 +98,14 @@ def api_devices():
     response = {'status': 'success', 'data': {'devices': devices}}
     return jsonify(response)
 
+
+@app.route('/api/devices/<int:id>/sessions', methods=['GET'])
+def api_device_sessions(id):
+    query = db_session.query(Session).filter(Session.device_id==id)
+    sessions = [session.asdict() for session in query[::-1]]
+    response = {'status': 'success', 'data': {'sessions': sessions}}
+    return jsonify(response)
+
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     db_session.remove()
